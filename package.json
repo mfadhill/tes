@@ -6,10 +6,20 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/pg": "^8.11.11",
+    "bcrypt": "^5.1.1",
+    "elysia": "^1.2.25",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.14.1"
   },
   "devDependencies": {
     "bun-types": "latest"
   },
-  "module": "src/index.js"
+  "module": "src/index.js",
+  "type": "module",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
 }

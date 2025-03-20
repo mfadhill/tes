@@ -4,6 +4,8 @@ import { register, login } from '../controllers/users';
 import { createDivision, deleteDivision, getDivisions, updateDivision } from '../controllers/divisions';
 import { createDepartment, deleteDepartment, getDepartments, updateDepartment } from '../controllers/departments';
 import { createEmployee, updateEmployee, getAllEmployees, getEmployeeById, deleteEmployee } from '../controllers/employee';
+import { createProject, deleteProject, getProject, updateProject } from '../controllers/projects';
+import { addAttendance, deleteAttendance, getAllAttendance, getAttendanceById, updateAttendance } from '../controllers/attendance';
 
 export const routes = (app: Elysia) => {
 
@@ -21,6 +23,13 @@ export const routes = (app: Elysia) => {
     .delete('/:id', ({ params }) => deleteDivision(params.id))
   );
 
+  app.group('/projects', project => project
+    .get('/', () => getProject())
+    .post('/', ({ body }) => createProject(body))
+    .put('/:id', ({ params, body }) => updateProject(params.id, body))
+    .delete('/:id', ({ params }) => deleteProject((params.id)))
+  )
+
   // Departments Routes
   app.group('/departments', department => department
     .get('/', () => getDepartments())
@@ -28,6 +37,32 @@ export const routes = (app: Elysia) => {
     .put('/:id', ({ params, body }) => updateDepartment(parseInt(params.id), body))
     .delete('/:id', ({ params }) => deleteDepartment(parseInt(params.id)))
   );
+
+
+  app.group('/attendance', attendance => attendance
+    .post(
+      '/',
+      addAttendance,
+      {
+        body: t.Object({
+          check_in: t.String(),
+          check_out: t.String(),
+          employee_id: t.Numeric()
+        })
+      }
+    )
+
+    .get('/', getAllAttendance)
+    .get('/:id', getAttendanceById)
+    .put('/:id', updateAttendance, {
+      body: t.Object({
+        check_in: t.String(),
+        check_out: t.String()
+      })
+    })
+    .delete('/:id', deleteAttendance)
+  )
+
 
   // Employees Routes
   app.group('/employees', employee => employee

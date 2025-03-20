@@ -52,7 +52,6 @@ export const updateEmployee: Handler = async ({ params, body, set }) => {
     return result.rows[0];
 };
 
-// GET ALL EMPLOYEES
 export const getAllEmployees: Handler = async () => {
     const result = await client.query(
         `SELECT e.id, e.name, e.email, e.department_id, d.name AS department_name, e.manager_id, m.name AS manager_name
@@ -62,7 +61,6 @@ export const getAllEmployees: Handler = async () => {
     );
     return result.rows;
 };
-
 // GET EMPLOYEE BY ID
 export const getEmployeeById: Handler = async ({ params, set }) => {
     const result = await client.query(

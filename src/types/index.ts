@@ -4,3 +4,9 @@ export type EmployeeBody = {
     department_id?: number;
     manager_id?: number;
 };
+
+export type attendanceBody = {
+    check_in: string;
+    check_out: string;
+    employee_id: number;
+}

@@ -6,16 +6,17 @@ import { createDepartment, deleteDepartment, getDepartments, updateDepartment } 
 import { createEmployee, updateEmployee, getAllEmployees, getEmployeeById, deleteEmployee } from '../controllers/employee';
 import { createProject, deleteProject, getProject, updateProject } from '../controllers/projects';
 import { addAttendance, deleteAttendance, getAllAttendance, getAttendanceById, updateAttendance } from '../controllers/attendance';
+import { addEmployeeProject, deleteEmployeeProject, getAllEmployeeProjects } from '../controllers/employeeProject';
 
 export const routes = (app: Elysia) => {
 
   app.post('/register', async ({ body }) => register(body));
   app.post('/login', async ({ body }) => login(body));
 
-  // Apply middleware to all protected routes
+  // Apply
   app.use(authMiddleware);
 
-  // Divisions Routes
+  // Divisions 
   app.group('/divisions', division => division
     .get('/', () => getDivisions())
     .post('/', ({ body }) => createDivision(body))
@@ -30,7 +31,7 @@ export const routes = (app: Elysia) => {
     .delete('/:id', ({ params }) => deleteProject((params.id)))
   )
 
-  // Departments Routes
+  // Departments 
   app.group('/departments', department => department
     .get('/', () => getDepartments())
     .post('/', ({ body }) => createDepartment(body))
@@ -38,7 +39,7 @@ export const routes = (app: Elysia) => {
     .delete('/:id', ({ params }) => deleteDepartment(parseInt(params.id)))
   );
 
-
+  //Attendance
   app.group('/attendance', attendance => attendance
     .post(
       '/',
@@ -64,7 +65,20 @@ export const routes = (app: Elysia) => {
   )
 
 
-  // Employees Routes
+  //Employee Project 
+  app.group('/employee-project', employeeProject => employeeProject
+    .post('/', addEmployeeProject, {
+      body: t.Object({
+        employee_id: t.Numeric(),
+        project_id: t.Numeric()
+      })
+    })
+    .get('/', getAllEmployeeProjects)
+    .delete('/:employee_id/:project_id', deleteEmployeeProject)
+  )
+
+
+  // Employees 
   app.group('/employees', employee => employee
     .post('/', createEmployee, {
       body: t.Object({

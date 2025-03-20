@@ -10,3 +10,8 @@ export type attendanceBody = {
     check_out: string;
     employee_id: number;
 }
+
+export type employeedProject = {
+    employee_id: number;
+    project_id: number;
+}
